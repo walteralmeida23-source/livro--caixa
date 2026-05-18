@@ -5,8 +5,13 @@
     "version": "1.0.0",
     "orientation": "portrait",
     "userInterfaceStyle": "light",
+    "icon": "./assets/icon.png",
     "android": {
-      "package": "com.walter789.livrocaixa"
+      "package": "com.walter789.livrocaixa",
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/icon.png",
+        "backgroundColor": "#F5F1E8"
+      }
     },
     "extra": {
       "eas": {
