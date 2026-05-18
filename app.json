@@ -6,9 +6,6 @@
     "orientation": "portrait",
     "userInterfaceStyle": "light",
     "android": {
-      "adaptiveIcon": {
-        "backgroundColor": "#F5F1E8"
-      },
       "package": "com.walter789.livrocaixa"
     },
     "plugins": [
