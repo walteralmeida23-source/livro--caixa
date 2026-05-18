@@ -8,15 +8,6 @@
     "android": {
       "package": "com.walter789.livrocaixa"
     },
-    "plugins": [
-      [
-        "expo-image-picker",
-        {
-          "photosPermission": "Permite acesso às fotos para anexar faturas.",
-          "cameraPermission": "Permite acesso à câmara para fotografar faturas."
-        }
-      ]
-    ],
     "extra": {
       "eas": {
         "projectId": "c7958245-0129-4a96-a4ce-99360382ad56"
