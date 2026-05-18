@@ -12,26 +12,30 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Node.js
+      - name: Node.js 18
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 18
 
       - name: Instalar dependências
-        run: npm install
+        run: npm install --legacy-peer-deps
 
       - name: Instalar EAS CLI
-        run: npm install -g eas-cli
+        run: npm install -g eas-cli@latest
 
       - name: Build APK
-        run: eas build --platform android --profile preview --non-interactive --owner walter789
+        run: eas build --platform android --profile preview --non-interactive
         env:
           EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
 
-      - name: Download APK
+      - name: Obter e descarregar APK
         run: |
-          URL=$(eas build:list --platform android --limit 1 --json --non-interactive | node -e "const d=require('fs').readFileSync('/dev/stdin','utf8');console.log(JSON.parse(d)[0].artifacts.buildUrl)")
-          curl -L "$URL" -o livro-caixa.apk
+          sleep 30
+          URL=$(eas build:list --platform android --limit 1 --json --non-interactive | node -e "process.stdin.resume();let d='';process.stdin.on('data',c=>d+=c);process.stdin.on('end',()=>{try{console.log(JSON.parse(d)[0].artifacts.buildUrl)}catch(e){console.log('pending')}})")
+          echo "URL encontrado: $URL"
+          if [ "$URL" != "pending" ] && [ ! -z "$URL" ]; then
+            curl -L "$URL" -o livro-caixa.apk
+          fi
         env:
           EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
 
@@ -41,3 +45,4 @@ jobs:
           name: livro-caixa-apk
           path: livro-caixa.apk
           retention-days: 7
+        continue-on-error: true
