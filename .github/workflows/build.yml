@@ -1,0 +1,43 @@
+name: Build APK
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Instalar dependências
+        run: npm install
+
+      - name: Instalar EAS CLI
+        run: npm install -g eas-cli
+
+      - name: Build APK
+        run: eas build --platform android --profile preview --non-interactive --owner walter789
+        env:
+          EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
+
+      - name: Download APK
+        run: |
+          URL=$(eas build:list --platform android --limit 1 --json --non-interactive | node -e "const d=require('fs').readFileSync('/dev/stdin','utf8');console.log(JSON.parse(d)[0].artifacts.buildUrl)")
+          curl -L "$URL" -o livro-caixa.apk
+        env:
+          EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
+
+      - name: Guardar APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: livro-caixa-apk
+          path: livro-caixa.apk
+          retention-days: 7
