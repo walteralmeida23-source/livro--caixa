@@ -5,7 +5,6 @@ import {
   SafeAreaView, StatusBar, Platform, Image
 } from 'react-native';
 import { createClient } from '@supabase/supabase-js';
-import * as ImagePicker from 'expo-image-picker';
 
 const SUPABASE_URL  = 'https://fpawttewuxrdptjrmdjt.supabase.co';
 const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZwYXd0dGV3dXhyZHB0anJtZGp0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzg5NjA2NTQsImV4cCI6MjA5NDUzNjY1NH0.FXVDAYmSpZxU9EVioEUiUtKO5QU-2T82WxbjV6Dj28A';
